@@ -16,20 +16,20 @@ namespace RestaurantAPI
         {
             if (_dbContext.Database.CanConnect())
             {
-                if (!_dbContext.Restuarants.Any())
+                if (!_dbContext.Restaurants.Any())
                 {
                     var restaurants = GetRestuarants();
-                    _dbContext.Restuarants.AddRange(restaurants);
+                    _dbContext.Restaurants.AddRange(restaurants);
                     _dbContext.SaveChanges();
                 }
             }
         }
 
-        private static IEnumerable<Restuarant> GetRestuarants()
+        private static IEnumerable<Restaurant> GetRestuarants()
         {
-            var restaurants = new List<Restuarant>()
+            var restaurants = new List<Restaurant>()
             {
-               new Restuarant()
+               new Restaurant()
                {
                    Name = "KFC",
                    Category = "Fast Food",
@@ -56,7 +56,7 @@ namespace RestaurantAPI
                        PostalCode = "213-70"
                    }
                },
-               new Restuarant()
+               new Restaurant()
                {
                    Name = "McDonald",
                    Category = "Fast Food",

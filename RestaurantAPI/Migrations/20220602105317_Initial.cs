@@ -2,7 +2,7 @@
 
 namespace RestaurantAPI.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +12,8 @@ namespace RestaurantAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -22,7 +22,7 @@ namespace RestaurantAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Restuarants",
+                name: "Restaurants",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,9 +37,9 @@ namespace RestaurantAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restuarants", x => x.Id);
+                    table.PrimaryKey("PK_Restaurants", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Restuarants_Addresses_AddressId",
+                        name: "FK_Restaurants_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
@@ -55,28 +55,27 @@ namespace RestaurantAPI.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    RestaurantId = table.Column<int>(type: "int", nullable: false),
-                    RestuarantId = table.Column<int>(type: "int", nullable: true)
+                    RestaurantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dishes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dishes_Restuarants_RestuarantId",
-                        column: x => x.RestuarantId,
-                        principalTable: "Restuarants",
+                        name: "FK_Dishes_Restaurants_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dishes_RestuarantId",
+                name: "IX_Dishes_RestaurantId",
                 table: "Dishes",
-                column: "RestuarantId");
+                column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restuarants_AddressId",
-                table: "Restuarants",
+                name: "IX_Restaurants_AddressId",
+                table: "Restaurants",
                 column: "AddressId",
                 unique: true);
         }
@@ -87,7 +86,7 @@ namespace RestaurantAPI.Migrations
                 name: "Dishes");
 
             migrationBuilder.DropTable(
-                name: "Restuarants");
+                name: "Restaurants");
 
             migrationBuilder.DropTable(
                 name: "Addresses");

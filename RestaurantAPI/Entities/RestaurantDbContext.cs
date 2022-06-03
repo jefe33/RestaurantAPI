@@ -5,13 +5,13 @@ namespace RestaurantAPI.Entities
     public class RestaurantDbContext : DbContext
     {
         private readonly string _connectionString = "Server=DESKTOP-BHFNF1J\\SQLEXPRESS;Database=RestrauntDb;Trusted_Connection=True;";
-        public DbSet<Restuarant> Restuarants { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Restuarant>()
+            modelBuilder.Entity<Restaurant>()
                 .Property(r => r.Name)
                 .IsRequired()
                 .HasMaxLength(25);
